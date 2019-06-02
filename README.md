@@ -1,9 +1,9 @@
 # go-backend
 
-Universe back end in Go.  All documentation here is first-draft and planning oriented.
+Universe back end in Go.  All documentation here is first-draft and planning oriented.  It will likely change.  
 
 # First step: API server
-Http server that works quite like the one that Dan Trevino built in Express-- in fact hopefully exactly.  
+Http server that works quite like the one that Dan Trevino built in Express-- in fact hopefully exactly, with the exception of user auth, for now.  
 
 # Second Step:  Generate mock keypars
 (question: Should we be doing this on the front end, anyway-- feeding them to the back end?).  Need to look into libraries for generating Blockstack, Bitcoin, and Ethereum addresses (on either the front or the back in fact-- main thing is that we want 
