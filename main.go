@@ -41,7 +41,7 @@ func main() {
 	fmt.Println("Your HD extended private key:", key)
 	fmt.Println("An EC private key derived from your HD private key:", bitcoinprivatekey)
 
-	//Generate Ethereum Address
+	//Generate Ethereum Address -- From: https://goethereumbook.org/wallet-generate/
 	privateKey, err := crypto.GenerateKey()
 	if err != nil {
 		log.Fatal(err)
