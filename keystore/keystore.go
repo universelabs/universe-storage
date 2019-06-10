@@ -21,7 +21,7 @@ type Wallet struct {
 	Platform string `storm:"index"` // e.g. ETH, BTC, Blockstack
 	Description string `storm:"index"` // e.g. BTC:personal, ETH:app1, arbitrary descriptor
 
-	Data Key // 
+	Data Key `storm:"inline"` 
 }
 
 type BlockstackID struct {
@@ -83,6 +83,10 @@ func main() {
 func (keystore *Keystore) Init(pathname string) error {
 	var err error
 	keystore.db, err = storm.Open(pathname)
+	if err != nil {
+		return err
+	}
+	err = keystore.db.Init(&Wallet{})
 	return err
 }
 
@@ -121,6 +125,11 @@ func (keystore *Keystore) GetAll() ([]Wallet, error) {
 // 	return err
 // }
 
-// func (keystore Keystore) DeleteWallet() error {
-	
-// }
+func (keystore Keystore) DeleteWallet(id int) error {
+	get, geterr := keystore.GetWallet(id)
+	if geterr != nil {
+		return geterr
+	} else {
+		return keystore.db.DeleteStruct(&get)
+	}
+}
