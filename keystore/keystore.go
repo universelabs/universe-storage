@@ -25,6 +25,7 @@ type Wallet struct {
 }
 
 type BlockstackID struct {
+	UID strind
 	Email string
 	Password string
 	Passphrase string 
