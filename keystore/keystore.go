@@ -1,4 +1,4 @@
-package storage
+package main
 
 import (
 	"fmt"
@@ -25,7 +25,7 @@ type Wallet struct {
 }
 
 type BlockstackID struct {
-	UID strind
+	UID string
 	Email string
 	Password string
 	Passphrase string 
@@ -47,38 +47,36 @@ type BTCKey struct {
 
 func (b BTCKey) IsKey() {}
 
-
-// func main() {
-// 	keystore := Keystore{}
-// 	err := keystore.Init("db.db")
-// 	// db, err := storm.Open("db.db")
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	defer keystore.Close()
-// 	// make a few wallet structs for testing
-// 	eth1 := Wallet{
-// 		Platform: "eth",
-// 		Description: "test1",
-// 		Data: ETHKey{
-// 			PublicKey: "wiq73yrh79yr9rf93hfyca",
-// 			PrivateKey: "fgbosfgnuonoufnduonf3f3o",},
-// 	}
-// 	fmt.Println(eth1)
-// 	saveerr := keystore.AddWallet(&eth1)
-// 	if saveerr != nil {
-// 		fmt.Println(saveerr)
-// 	} else {
-// 		fmt.Printf("saved eth1:%v\n", eth1)
-// 	}
-// 	ret, reterr := keystore.GetPlatform("eth")
-// 	if reterr != nil {
-// 		fmt.Println(reterr)
-// 	} else {
-// 		fmt.Println(ret)
-// 	}
-// 	// TODO: keystore_test.go
-// }
+func main() {
+	keystore := Keystore{}
+	err := keystore.Init("db.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer keystore.Close()
+	// make a few wallet structs for testing
+	eth1 := Wallet{
+		Platform: "eth",
+		Description: "test1",
+		Data: ETHKey{
+			PublicKey: "wiq73yrh79yr9rf93hfyca",
+			PrivateKey: "fgbosfgnuonoufnduonf3f3o",},
+	}
+	fmt.Println(eth1)
+	saveerr := keystore.AddWallet(&eth1)
+	if saveerr != nil {
+		fmt.Println(saveerr)
+	} else {
+		fmt.Printf("saved eth1:%v\n", eth1)
+	}
+	ret, reterr := keystore.GetPlatform("eth")
+	if reterr != nil {
+		fmt.Println(reterr)
+	} else {
+		fmt.Println(ret)
+	}
+	// TODO: keystore_test.go
+}
 
 // keystore methods
 
