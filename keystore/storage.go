@@ -97,19 +97,6 @@ func main() {
 		fmt.Println(ret)
 	}
 	// TODO: keystore_test.go
-
-	// bid := Wallet{
-	// 	ID: 1,
-	// 	Platform: "Blockstack",
-	// 	Description: "test1",
-	// 	Data: BlockstackID{
-	// 		UID: "123",
-	// 		Email: "a@b.com",
-	// 		Password: "12345",
-	// 		Passphrase: "hello-bye",},
-	// }
-	// fmt.Println(bid)
-	
 }
 
 type Wallet struct {
