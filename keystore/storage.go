@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strconv"
 	"encoding/json"
 
 	"github.com/asdine/storm"
@@ -92,7 +93,7 @@ func main() {
 	}
 	ret, reterr := keystore.GetWallet(1)
 	if reterr != nil {
-		fmt.Printf("err: %q", reterr)	
+		fmt.Printf("err: %q\n", reterr)	
 	} else {
 		fmt.Println(ret)
 	}
@@ -157,7 +158,7 @@ func (keystore *Keystore) Close() error {
 func (w *Wallet) MarshalJSON() ([]byte, error) {
 	m := make(map[string]string)
 
-	m["ID"] = string(w.ID)
+	m["ID"] = strconv.Itoa(w.ID)
 	m["Platform"] = w.Platform
 	m["Description"] = w.Description
 	
@@ -180,14 +181,13 @@ func (w *Wallet) UnmarshalJSON(data []byte) error {
 	}
 	
 	for key, raw := range objMap {
-		fmt.Printf("%q: %q", key, *raw)
+		fmt.Printf("%q: %q\n", key, *raw)
 	}
 
 	// unmarshal the metadata 
 	if err = json.Unmarshal(*objMap["ID"], &w.ID); err != nil {
 		return err
 	}
-
 	if err = json.Unmarshal(*objMap["Platform"], &w.Platform); err != nil {
 		return err
 	}
@@ -201,7 +201,7 @@ func (w *Wallet) UnmarshalJSON(data []byte) error {
 	case "Blockstack":
 		key := BlockstackID{}
 		if err = json.Unmarshal(*objMap["Data"], &key); err != nil {
-			return err
+			return err 
 		}	
 		fmt.Println(key)
 		w.Data = key
