@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
-	"strconv"
+	// "strconv"
 	"encoding/json"
 
 	"github.com/asdine/storm"
@@ -79,12 +79,7 @@ func main() {
 			Password: "12345",
 			Passphrase: "hello-bye",},
 	}
-	byteSlice, _ := json.Marshal(bid)
-	fmt.Println(string(byteSlice))
-	bidp := Wallet{}
-	json.Unmarshal(byteSlice, &bidp)
-	fmt.Println(bidp)	
-	// fmt.Println(bid)
+	
 	saveerr := keystore.AddWallet(&bid)
 	if saveerr != nil {
 		fmt.Println(saveerr)
@@ -110,8 +105,6 @@ type Wallet struct {
 
 type Key interface {
 	IsKey()
-	MarshalJSON() ([]byte, error)
-	// UnmarshalJSON(data []byte) error
 }
 
 type BlockstackID struct {
@@ -153,24 +146,7 @@ func (keystore *Keystore) Close() error {
 	return err
 }
 
-// Marshal and Unmarshal for wallets 
-
-func (w *Wallet) MarshalJSON() ([]byte, error) {
-	m := make(map[string]string)
-
-	m["ID"] = strconv.Itoa(w.ID)
-	m["Platform"] = w.Platform
-	m["Description"] = w.Description
-	
-	// 
-	data, err := w.Data.MarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	m["Data"] = string(data)
-	
-	return json.Marshal(m)
-}
+// Unmarshalling wallets 
 
 func (w *Wallet) UnmarshalJSON(data []byte) error {
 	// deconstruct the serialized json into a map
@@ -180,14 +156,12 @@ func (w *Wallet) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	
-	for key, raw := range objMap {
-		fmt.Printf("%q: %q\n", key, *raw)
-	}
-
 	// unmarshal the metadata 
 	if err = json.Unmarshal(*objMap["ID"], &w.ID); err != nil {
+		fmt.Println(err)
 		return err
 	}
+	
 	if err = json.Unmarshal(*objMap["Platform"], &w.Platform); err != nil {
 		return err
 	}
@@ -220,33 +194,4 @@ func (w *Wallet) UnmarshalJSON(data []byte) error {
 	}
 	
 	return nil
-}
-
-// Marshal and Unmarshal for Key interfaces
-
-func (bid BlockstackID) MarshalJSON() ([]byte, error) {
-	m := make(map[string]string)
-	m["uid"] = bid.UID
-	m["email"] = bid.Email
-	m["password"] = bid.Password
-	m["passphrase"] = bid.Passphrase
-	return json.Marshal(m)
-}
-
-// func (bid *BlockstackID) UnmarshalJSON(data []byte) error {
-
-// }
-
-func (eth ETHKey) MarshalJSON() ([]byte, error) {
-	m := make(map[string]string)
-	m["publickey"] = eth.PublicKey
-	m["privatekey"] = eth.PrivateKey 
-	return json.Marshal(m)
-}
-
-func (btc BTCKey) MarshalJSON() ([]byte, error) {
-	m := make(map[string]string)
-	m["publickey"] = btc.PublicKey
-	m["privatekey"] = btc.PrivateKey 
-	return json.Marshal(m)
 }
