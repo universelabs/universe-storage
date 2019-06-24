@@ -1,18 +1,18 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	"log"
 	"net/http"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
 	
-	"keystore"
+	"github.com/universelabs/universe-server/storage"
 )
 
 var (
-	storage keystore.Keystore
+	keystore storage.Keystore
 )
 
 // "/" will only return metadata
@@ -29,19 +29,15 @@ func Routes() *chi.Mux {
 		middleware.Recoverer,
 	)
 
-	router.Route("/0.0.7", func(r chi.Router) {
-		r.Mount("/api/keystore", keystore.Routes()
+	router.Route("/0.0.10", func(r chi.Router) {
+		r.Mount("/api/keystore", storage.Routes())
 	})
 	return router
 }
 
-func handleRequests() {
-	http.HandleFunc("/", )
-}
-
 func main() {
-	storage = keystore.storage.Keystore{}
-	storage.Init("keys.db")
+	// keystore = storage.Keystore{}
+	// keystore.Init("keys.db")
 
 	router := Routes()
 	
@@ -55,5 +51,19 @@ func main() {
 		log.Panicf("Logging error: %s\n", err.Error()) // panic if there's an error
 	}
 
-	log.Fatal(http.ListenAndServer(":8080", router)) // **port should be from env not hardcoded
+	// keystore.AddWallet(&storage.Wallet{
+	// 	Platform: "Ethereum",
+	// 	Description: "test1",
+	// 	Data: storage.ETHKey{
+	// 		PublicKey: "wiq73yrh79yr9rf93hfyca",
+	// 		PrivateKey: "fgbosfgnuonoufnduonf3f3o",},})
+
+	// ret, err := keystore.GetWallet(1)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// } else {
+	// 	fmt.Println(ret)
+	// }
+
+	log.Fatal(http.ListenAndServe(":8080", router)) // **port should be from env not hardcoded
 }
