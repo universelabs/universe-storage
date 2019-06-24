@@ -1,0 +1,15 @@
+diff --git a/README.md b/README.md
+old mode 100644
+new mode 100755
+diff --git a/server/server.go b/server/server.go
+old mode 100644
+new mode 100755
+diff --git a/storage/routes.go b/storage/routes.go
+old mode 100644
+new mode 100755
+diff --git a/storage/storage.go b/storage/storage.go
+old mode 100644
+new mode 100755
+diff --git a/storage/wallet.go b/storage/wallet.go
+old mode 100644
+new mode 100755
