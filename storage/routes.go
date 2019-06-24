@@ -8,8 +8,13 @@ import (
 
 )
 
-func Routes() *chi.Mux {
+var (
+	keystore *Keystore
+)
+
+func Routes(ks *Keystore) *chi.Mux {
 	router := chi.NewRouter()
+	keystore = ks
 	router.Get("/", GetAllWallets)
 	// router.Get("/platform/{platformID}", GetPlatform)
 	// router.Get("/key/{keyID}", GetKey)
@@ -34,4 +39,10 @@ func GetAllWallets(w http.ResponseWriter, r *http.Request) {
 	// 		PublicKey: "wiq73yrh79yr9rf93hfyca",
 	// 		PrivateKey: "fgbosfgnuonoufnduonf3f3o",},}}
 	// render.JSON(w, r, wallets)
+	ret, err := keystore.GetAll()
+	if err != nil {
+		render.JSON(w, r, err)
+	} else {
+		render.JSON(w, r, ret)
+	}
 }

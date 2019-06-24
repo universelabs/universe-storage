@@ -30,14 +30,14 @@ func Routes() *chi.Mux {
 	)
 
 	router.Route("/0.0.10", func(r chi.Router) {
-		r.Mount("/api/keystore", storage.Routes())
+		r.Mount("/api/keystore", storage.Routes(&keystore))
 	})
 	return router
 }
 
 func main() {
-	// keystore = storage.Keystore{}
-	// keystore.Init("keys.db")
+	keystore = storage.Keystore{}
+	keystore.Init("keys.db")
 
 	router := Routes()
 	
