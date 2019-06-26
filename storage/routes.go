@@ -1,11 +1,13 @@
 package storage
 
 import (
+	"log"
+	"strconv"
 	"net/http"
+	"encoding/json"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
-
 )
 
 var (
@@ -15,30 +17,59 @@ var (
 func Routes(ks *Keystore) *chi.Mux {
 	router := chi.NewRouter()
 	keystore = ks
+	router.Post("/addwallet", AddWallet)
+	router.Get("/wallet/{walletID}", GetWallet)
+	router.Get("/platform/{platformID}", GetPlatform)
 	router.Get("/", GetAllWallets)
-	// router.Get("/platform/{platformID}", GetPlatform)
-	// router.Get("/key/{keyID}", GetKey)
 	return router
 }
 
+func AddWallet(w http.ResponseWriter, r *http.Request) {
+	// unmarshal from json
+	wallet := Wallet{}
+	// log.Println(r.Body)
+	err := json.NewDecoder(r.Body).Decode(&wallet)
+	if err != nil {
+		log.Println(err)
+	} else {
+		log.Printf("added wallet: %v", wallet)
+	}
+	// add to db
+	err = keystore.AddWallet(&wallet)
+	// return err if failed, else confirmation
+	if err != nil {
+		render.JSON(w, r, err)
+	} else {
+		render.JSON(w, r, wallet)
+	}
+}
+
+func GetWallet(w http.ResponseWriter, r *http.Request) {
+	walletID, urlerr := strconv.Atoi(chi.URLParam(r, "walletID"))
+	if urlerr != nil {
+		log.Println(urlerr)
+		render.JSON(w, r, urlerr)
+		return
+	}
+	ret, err := keystore.GetWallet(walletID)
+	if err != nil {
+		render.JSON(w, r, err)
+	} else {
+		render.JSON(w, r, ret)
+	}
+}
+
+func GetPlatform(w http.ResponseWriter, r *http.Request) {
+	platformID := chi.URLParam(r, "platformID")
+	ret, err := keystore.GetPlatform(platformID)
+	if err != nil {
+		render.JSON(w, r, err)
+	} else {
+		render.JSON(w, r, ret)
+	}
+}
+
 func GetAllWallets(w http.ResponseWriter, r *http.Request) {
-	// testing the route
-	// wallets := []Wallet{
-	// 	{ID: 0,
-	// 	Platform: "Blockstack",
-	// 	Description: "test1",
-	// 	Data: BlockstackID{
-	// 		UID: "123",
-	// 		Email: "a@b.com",
-	// 		Password: "12345",
-	// 		Passphrase: "hello-bye",},},
-	// 	{ID: 1,
-	// 	Platform: "Ethereum",
-	// 	Description: "test1",
-	// 	Data: ETHKey{
-	// 		PublicKey: "wiq73yrh79yr9rf93hfyca",
-	// 		PrivateKey: "fgbosfgnuonoufnduonf3f3o",},}}
-	// render.JSON(w, r, wallets)
 	ret, err := keystore.GetAll()
 	if err != nil {
 		render.JSON(w, r, err)
@@ -46,3 +77,4 @@ func GetAllWallets(w http.ResponseWriter, r *http.Request) {
 		render.JSON(w, r, ret)
 	}
 }
+

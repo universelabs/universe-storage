@@ -56,7 +56,8 @@ func main() {
 	// 	Description: "test1",
 	// 	Data: storage.ETHKey{
 	// 		PublicKey: "wiq73yrh79yr9rf93hfyca",
-	// 		PrivateKey: "fgbosfgnuonoufnduonf3f3o",},})
+	// 		PrivateKey: "fgbosfgnuonoufnduonf3f3o",},
+	// })
 
 	// ret, err := keystore.GetWallet(1)
 	// if err != nil {
