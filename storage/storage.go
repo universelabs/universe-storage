@@ -1,9 +1,6 @@
 package storage
 
 import (
-	// "log"
-	// "encoding/json"
-
 	"github.com/asdine/storm"
 )
 	
@@ -51,11 +48,6 @@ func (ks *Keystore) GetAll() ([]Wallet, error) {
 	err := ks.db.All(&wallets)
 	return wallets, err
 }
-
-// func (ks Keystore) UpdateWallet(id int, new_wallet *Wallet) error {
-// 	err := ks.db.UpdateField()
-// 	return err
-// }
 
 func (ks Keystore) DeleteWallet(id int) error {
 	get, geterr := ks.GetWallet(id)

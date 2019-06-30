@@ -15,11 +15,7 @@ var (
 	keystore storage.Keystore
 )
 
-// "/" will only return metadata
-// "/{platform}" will return data for specific platform
-// "/all" 
-
-func Routes() *chi.Mux {
+func Routes(cfg *config.Config) *chi.Mux {
 	router := chi.NewRouter()
 	router.Use(
 		render.SetContentType(render.ContentTypeJSON),
@@ -30,16 +26,20 @@ func Routes() *chi.Mux {
 	)
 
 	router.Route("/0.0.10", func(r chi.Router) {
-		r.Mount("/api/keystore", storage.Routes(&keystore))
+		r.Mount("/api/keystore", storage.Routes(cfg))
 	})
 	return router
 }
 
 func main() {
-	keystore = storage.Keystore{}
-	keystore.Init("keys.db")
-
-	router := Routes()
+	// keystore = storage.Keystore{}
+	// keystore.Init("keys.db")
+	var err error
+	var cfg config.Config
+	if cfg, err = config.New(); err != nil {
+		log.Panicf("Configuration error!\n", err)
+	}
+	router := Routes(cfg)
 	
 	// print all routes
 	walkFunc := func(method, route string, handler http.Handler, 
