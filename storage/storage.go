@@ -10,7 +10,8 @@ type Keystore struct {
 
 // keystore methods
 
-func (ks *Keystore) Init(pathname string, new bool) (err error) {
+func (ks *Keystore) Init(pathname string, newInstance bool) (err error) {
+	// check against newInstance
 	ks.db, err = storm.Open(pathname)
 	if err != nil {
 		return err
