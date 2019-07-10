@@ -12,13 +12,8 @@ import (
 	"github.com/go-chi/render"
 )
 
-var (
-	keystore *Keystore
-)
-
 func Routes(cfg *config.Config) *chi.Mux {
 	router := chi.NewRouter()
-	keystore = ks
 	router.Post("/addwallet", AddWallet(cfg))
 	router.Get("/wallet/{walletID}", GetWallet(cfg))
 	router.Get("/platform/{platformID}", GetPlatform(cfg))

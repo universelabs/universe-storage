@@ -1,6 +1,6 @@
 {
 	"port":	3000,
-	"storm_db": {
+	"stormdb": {
 		"path":	"keys.db",
 		"exists": false 
 	},

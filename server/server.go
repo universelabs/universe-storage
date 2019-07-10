@@ -9,10 +9,7 @@ import (
 	"github.com/go-chi/render"
 	
 	"github.com/universelabs/universe-server/storage"
-)
-
-var (
-	keystore storage.Keystore
+	"github.com/universelabs/universe-server/internal/config"
 )
 
 func Routes(cfg *config.Config) *chi.Mux {
@@ -32,13 +29,12 @@ func Routes(cfg *config.Config) *chi.Mux {
 }
 
 func main() {
-	// keystore = storage.Keystore{}
-	// keystore.Init("keys.db")
 	var err error
 	var cfg config.Config
 	if cfg, err = config.New(); err != nil {
-		log.Panicf("Configuration error!\n", err)
+		log.Panicf("Configuration error: %v\n", err)
 	}
+
 	router := Routes(cfg)
 	
 	// print all routes
