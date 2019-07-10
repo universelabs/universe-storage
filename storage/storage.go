@@ -1,9 +1,6 @@
 package storage
 
 import (
-	// "log"
-	// "encoding/json"
-
 	"github.com/asdine/storm"
 )
 	
@@ -13,7 +10,8 @@ type Keystore struct {
 
 // keystore methods
 
-func (ks *Keystore) Init(pathname string) (err error) {
+func (ks *Keystore) Init(pathname string, newInstance bool) (err error) {
+	// check against newInstance
 	ks.db, err = storm.Open(pathname)
 	if err != nil {
 		return err
@@ -51,11 +49,6 @@ func (ks *Keystore) GetAll() ([]Wallet, error) {
 	err := ks.db.All(&wallets)
 	return wallets, err
 }
-
-// func (ks Keystore) UpdateWallet(id int, new_wallet *Wallet) error {
-// 	err := ks.db.UpdateField()
-// 	return err
-// }
 
 func (ks Keystore) DeleteWallet(id int) error {
 	get, geterr := ks.GetWallet(id)
