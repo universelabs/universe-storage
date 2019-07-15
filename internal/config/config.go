@@ -42,15 +42,10 @@ func New() (*Config, error) {
 		return &cfg, cfgerr
 	}
 	cfg.KS = storage.Keystore{}
-	// need to check if creating new db or opening existing one
-	dberr := cfg.KS.Init(cfg.Constants.StormDB.Path, !cfg.StormDB.exists)
+	dberr := cfg.KS.Init(cfg.Constants.StormDB.Path)
 	if dberr != nil {
 		cfg.KS = nil
 		return &cfg, dberr
-	}
-	if !cfg.StormDB.exists {
-		cfg.StormDB.exists = true
-		viper.Set("StormDB.exists", true)
 	}
 	return &cfg, nil
 }
