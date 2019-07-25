@@ -1,42 +1,32 @@
-package main
+package http
 
 import (
-	// "fmt"
+	// stdlib
 	"log"
 	"net/http"
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
-	"github.com/go-chi/render"
-	
-	"github.com/universelabs/universe-server/storage"
+	// universe
 	"github.com/universelabs/universe-server/internal/config"
 )
 
-func Routes(cfg *config.Config) *chi.Mux {
-	router := chi.NewRouter()
-	router.Use(
-		render.SetContentType(render.ContentTypeJSON),
-		middleware.Logger,
-		middleware.DefaultCompress,
-		middleware.RedirectSlashes,
-		middleware.Recoverer,
-	)
-
-	router.Route("/0.0.10", func(r chi.Router) {
-		r.Mount("/api/keystore", storage.Routes(cfg))
-	})
-	return router
+// HTTP service
+type Server struct {
+	// net/http infrastructure
+	ln net.Listener
+	// handler to serve
+	Handler *Handler
+	// bind address to open
+	Addr string
 }
 
-func main() {
-	var err error
-	var cfg config.Config
-	if cfg, err = config.New(); err != nil {
-		log.Panicf("Configuration error: %v\n", err)
+// Returns a new Server instantiated from the arguments 
+func NewServer(port string, ks *universe.Keystore) *Server {
+	srv := &Server {
+		// set addr and port
+		Addr: port
+		// init handler
+		Handler: NewHandler(ks)
 	}
 
-	router := Routes(cfg)
-	
 	// print all routes
 	walkFunc := func(method, route string, handler http.Handler, 
 		middlewares ...func(http.Handler) http.Handler) error {
@@ -46,21 +36,29 @@ func main() {
 	if err := chi.Walk(router, walkFunc); err != nil {
 		log.Panicf("Logging error: %s\n", err.Error()) // panic if there's an error
 	}
+}
 
-	// keystore.AddWallet(&storage.Wallet{
-	// 	Platform: "Ethereum",
-	// 	Description: "test1",
-	// 	Data: storage.ETHKey{
-	// 		PublicKey: "wiq73yrh79yr9rf93hfyca",
-	// 		PrivateKey: "fgbosfgnuonoufnduonf3f3o",},
-	// })
+// Listens and serves the server instance
+func (srv *Server) Open() error {
+	// open the socket
+	ln, err := net.Listen("tcp", srv.Addr)
+	if err != nil {
+		return err
+	}
+	srv.ln = ln
 
-	// ret, err := keystore.GetWallet(1)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// } else {
-	// 	fmt.Println(ret)
-	// }
+	// start HTTP server
+	go func() { http.Serve(srv.ln, srv.Handler) }()
+	// *** because http.Serve is called in a go routine, main() must hang
+	// the process so that the server doesn't close!
 
-	log.Fatal(http.ListenAndServe(":8080", router)) // **port should be from env not hardcoded
+	return nil
+}
+
+// Closes the server instance
+func (srv *Server) Close() error {
+	if srv.ln != nil {
+		return srv.ln.Close()
+	}
+	return nil
 }

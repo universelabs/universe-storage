@@ -1,51 +1,32 @@
 package config
 
 import (
-	"github.com/universelabs/universe-server/storage"
-
+	// universe
+	"github.com/universelabs/universe-server/universe"
+	// deps
 	"github.com/spf13/viper"
 )
 
+// This holds the configuration constants
 type Constants struct {
 	Port string
 	StormDB struct {
 		Path string
-		exists bool
 	}
 }
 
-func initViper() (Constants, error) {
+// Reads from config file and populates a Constants struct
+func NewConstants() (*Constants, error) {
 	// config filename and path
 	viper.AddConfigPath("./config")
-	viper.SetConfigNmae("server")
+	// this is currently hardcoded
+	viper.SetConfigName("server")
 	err := viper.ReadInConfig()
 	if err != nil {
 		return Constants{}, err
 	}
 	// unmarshal from config file
-	var constants Constants
-	err = viper.Unmarshal(&constants)
-	return constants, err
-}
-
-type Config struct {
-	Constants
-	KS storage.Keystore
-}
-
-// generates a new configuration instance to be passed around 
-func New() (*Config, error) {
-	cfg := Config{}
-	constants, cfgerr := initViper()
-	cfg.Constants = constants
-	if cfgerr != nil {
-		return &cfg, cfgerr
-	}
-	cfg.KS = storage.Keystore{}
-	dberr := cfg.KS.Init(cfg.Constants.StormDB.Path)
-	if dberr != nil {
-		cfg.KS = nil
-		return &cfg, dberr
-	}
-	return &cfg, nil
+	consts := &Constants{}	
+	err = viper.Unmarshal(consts)
+	return consts, err
 }

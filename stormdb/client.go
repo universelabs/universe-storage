@@ -1,9 +1,10 @@
 package stormdb
 
 import (
-	"github.com/asdine/storm"
-
+	// universe
 	"github.com/universelabs/universe-server/universe"
+	// deps
+	"github.com/asdine/storm"
 )
 
 // Represents a client to the underlying stormDB instance.

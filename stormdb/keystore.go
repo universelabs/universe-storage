@@ -1,6 +1,7 @@
 package stormdb
 
 import (
+	// universe
 	"github.com/universelabs/universe-server/universe"
 )
 
@@ -15,7 +16,7 @@ func (ks *Keystore) AddWallet(new_wallet *universe.Wallet) error {
 	// require object and id
 	if new_wallet == nil {
 		return universe.ErrWalletRequired
-	} 
+	}
 	// else if new_wallet.ID == "" {
 	// 	return universe.ErrWalletIDRequired
 	// }
@@ -24,13 +25,13 @@ func (ks *Keystore) AddWallet(new_wallet *universe.Wallet) error {
 	return err
 }
 
-func (ks *Keystore) GetWallet(id int) (*universe.Wallet, error) {
+func (ks *Keystore) GetWallet(id int) (universe.Wallet, error) {
 	wallet := universe.Wallet{}
 	err := ks.client.db.One("ID", id, &wallet)
 	if err != nil {
 		return nil, err
 	}
-	return &wallet, err
+	return wallet, err
 }
 
 func (ks *Keystore) GetPlatform(platform string) ([]universe.Wallet, error) {
