@@ -10,12 +10,23 @@ import (
 
 func main() {
 	// init config
-	consts := config.NewConstants()
+	consts, cfgerr := config.NewConstants()
+	if cfgerr != nil {
+		log.Panicf("Configuration error: %v\n", cfgerr)
+	}
 	// set up services
-
-	// wire everything together
-
+	db := stormdb.NewClient()
+	db.Open(consts.StormDB.Path)
+	server := http.NewServer(consts.Host + ":" + consts.Port, db.Keystore())	
 	// launch server
+	server.Open()
+	// hang for server
+    buf := bufio.NewReader(os.Stdin)
+    fmt.Print("Press any key to exit...")
+    sentence, err := buf.ReadBytes('\n')
+    if err != nil {
+        fmt.Println(err)
+    }
 }
 
 // func main() {

@@ -19,23 +19,14 @@ type Server struct {
 }
 
 // Returns a new Server instantiated from the arguments 
-func NewServer(port string, ks *universe.Keystore) *Server {
+func NewServer(addr string, ks universe.Keystore) *Server {
 	srv := &Server {
-		// set addr and port
-		Addr: port
+		// set addr
+		Addr: addr
 		// init handler
 		Handler: NewHandler(ks)
 	}
-
-	// print all routes
-	walkFunc := func(method, route string, handler http.Handler, 
-		middlewares ...func(http.Handler) http.Handler) error {
-			log.Printf("%s -> %s\n", route, method)
-			return nil
-	}
-	if err := chi.Walk(router, walkFunc); err != nil {
-		log.Panicf("Logging error: %s\n", err.Error()) // panic if there's an error
-	}
+	return srv
 }
 
 // Listens and serves the server instance

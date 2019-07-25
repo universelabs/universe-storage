@@ -43,4 +43,4 @@ func (c *Client) Close() error {
 	return nil
 }
 
-func (c *Client) Keystore() universe.Keystore { return &c.keystore }
+func (c *Client) Keystore() universe.Keystore { return &c.Keystore }

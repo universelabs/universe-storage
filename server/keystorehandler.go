@@ -18,13 +18,13 @@ type KeystoreHandler struct {
 	// router
 	*chi.Mux
 	// services
-	Keystore *universe.Keystore
+	Keystore universe.Keystore
 	// utilities
 	Logger *log.Logger
 }
 
 // NewKeystoreHandler returns a new instance of KeystoreHandler
-func NewKeystoreHandler(ks *universe.Keystore) *KeystoreHandler {
+func NewKeystoreHandler(ks universe.Keystore) *KeystoreHandler {
 	h := &KeystoreHandler{
 		Mux: chi.NewRouter(),
 		Keystore: ks, // FIX 
@@ -34,6 +34,17 @@ func NewKeystoreHandler(ks *universe.Keystore) *KeystoreHandler {
 	h.Mux.Get("/wallet/{walletID}", GetWallet())
 	h.Mux.Get("/platform/{platformID}", GetPlatform())
 	h.Mux.Get("/", GetAll())
+
+	// print all routes
+	walkFunc := func(method, route string, handler http.Handler, 
+		middlewares ...func(http.Handler) http.Handler) error {
+			log.Printf("[KeystoreHandler] %s -> %s\n", route, method)
+			return nil
+	}
+	if err := chi.Walk(h.Mux, walkFunc); err != nil {
+		log.Panicf("[KeystoreHandler] Logging error: %s\n", err.Error()) // panic if there's an error
+	}
+
 	return h
 }
 

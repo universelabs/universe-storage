@@ -9,7 +9,8 @@ import (
 
 // This holds the configuration constants
 type Constants struct {
-	Port string
+	Host string
+	Port int
 	StormDB struct {
 		Path string
 	}
@@ -20,7 +21,7 @@ func NewConstants() (*Constants, error) {
 	// config filename and path
 	viper.AddConfigPath("./config")
 	// this is currently hardcoded
-	viper.SetConfigName("server")
+	viper.SetConfigName("config")
 	err := viper.ReadInConfig()
 	if err != nil {
 		return Constants{}, err

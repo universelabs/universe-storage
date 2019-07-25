@@ -15,11 +15,11 @@ type Handler struct {
 	// router
 	*chi.Mux
 	// service handlers
-	KeystoreHandler *KeystoreHandler
+	KeystoreHandler KeystoreHandler
 }
 
 // Instantiates the chi.Mux and mounts the service handlers for chi's ServeHTTP 
-func NewHandler(ks *universe.Keystore) *Handler {
+func NewHandler(ks universe.Keystore) *Handler {
 	h.Mux = chi.NewRouter()
 	h.Mux.Use(
 		render.SetContentType(render.ContentTypeJSON),
