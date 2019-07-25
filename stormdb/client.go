@@ -7,6 +7,8 @@ import (
 	"github.com/asdine/storm"
 )
 
+var _ universe.KeystoreClient = &Client{}
+
 // Represents a client to the underlying stormDB instance.
 type Client struct {
 	db *storm.DB
@@ -43,4 +45,4 @@ func (c *Client) Close() error {
 	return nil
 }
 
-func (c *Client) Keystore() universe.Keystore { return &c.Keystore }
+func (c *Client) Keystore() universe.Keystore { return &c.keystore }

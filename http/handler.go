@@ -2,7 +2,6 @@ package http
 
 import (
 	// universe
-	"github.com/universelabs/universe-server/internal/config"
 	"github.com/universelabs/universe-server/universe"
 	// deps
 	"github.com/go-chi/chi"
@@ -15,11 +14,12 @@ type Handler struct {
 	// router
 	*chi.Mux
 	// service handlers
-	KeystoreHandler KeystoreHandler
+	KeystoreHandler *KeystoreHandler
 }
 
 // Instantiates the chi.Mux and mounts the service handlers for chi's ServeHTTP 
 func NewHandler(ks universe.Keystore) *Handler {
+	h := &Handler{}
 	h.Mux = chi.NewRouter()
 	h.Mux.Use(
 		render.SetContentType(render.ContentTypeJSON),
@@ -30,9 +30,10 @@ func NewHandler(ks universe.Keystore) *Handler {
 	)
 
 	// instantiate and route handlers
-	KeystoreHandler = NewKeystoreHandler(ks)
+	h.KeystoreHandler = NewKeystoreHandler(ks)
 	// don't hardcode the version!
 	h.Route("/" /*+ versionString*/, func(r chi.Router) {
-		r.Mount("/api/keystore", h.KeystoreHandler.ServeHTTP(w, r))
+		r.Mount("/api/keystore", h.KeystoreHandler)
 	})
+	return h
 }

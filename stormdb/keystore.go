@@ -5,6 +5,9 @@ import (
 	"github.com/universelabs/universe-server/universe"
 )
 
+// ensure Keystore implements universe.Keystore
+var _ universe.Keystore = &Keystore{}
+
 // represents the service to service storing wallets
 type Keystore struct {
 	client *Client
@@ -29,7 +32,7 @@ func (ks *Keystore) GetWallet(id int) (universe.Wallet, error) {
 	wallet := universe.Wallet{}
 	err := ks.client.db.One("ID", id, &wallet)
 	if err != nil {
-		return nil, err
+		return universe.Wallet{}, err
 	}
 	return wallet, err
 }

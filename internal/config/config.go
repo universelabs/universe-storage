@@ -1,8 +1,6 @@
 package config
 
 import (
-	// universe
-	"github.com/universelabs/universe-server/universe"
 	// deps
 	"github.com/spf13/viper"
 )
@@ -24,7 +22,7 @@ func NewConstants() (*Constants, error) {
 	viper.SetConfigName("config")
 	err := viper.ReadInConfig()
 	if err != nil {
-		return Constants{}, err
+		return &Constants{}, err
 	}
 	// unmarshal from config file
 	consts := &Constants{}	
