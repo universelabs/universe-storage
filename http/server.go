@@ -31,16 +31,16 @@ func NewServer(addr string, ks universe.Keystore) *Server {
 }
 
 // Listens and serves the server instance
-func (srv *Server) Open() error {
+func (s *Server) Open() error {
 	// open the socket
-	ln, err := net.Listen("tcp", srv.Addr)
+	ln, err := net.Listen("tcp", s.Addr)
 	if err != nil {
 		return err
 	}
-	srv.ln = ln
+	s.ln = ln
 
 	// start HTTP server
-	go func() { log.Fatal(http.Serve(srv.ln, srv.Handler)) }()
+	go func() { log.Fatal(http.Serve(s.ln, s.Handler)) }()
 	// *** because http.Serve is called in a go routine, main() must hang
 	// the process so that the server doesn't close!
 
@@ -48,9 +48,9 @@ func (srv *Server) Open() error {
 }
 
 // Closes the server instance
-func (srv *Server) Close() error {
-	if srv.ln != nil {
-		return srv.ln.Close()
+func (s *Server) Close() error {
+	if s.ln != nil {
+		return s.ln.Close()
 	}
 	return nil
 }

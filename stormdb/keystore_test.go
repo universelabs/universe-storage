@@ -1,13 +1,14 @@
 package stormdb_test
 
 import (
+	// stdlib
 	"testing"
 	"reflect"
-
+	// universe
 	"github.com/universelabs/universe-server/universe"
 )
 
-
+// Test the storm.AddWallet() and storm.GetWallet() functions
 func TestKeystore_AddGetWallet(t *testing.T) {
 	c := MustOpenClient()
 	defer c.Close()

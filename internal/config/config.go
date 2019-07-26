@@ -7,6 +7,7 @@ import (
 
 // This holds the configuration constants
 type Constants struct {
+	Version string
 	Host string
 	Port int
 	StormDB struct {

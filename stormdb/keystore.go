@@ -16,7 +16,7 @@ type Keystore struct {
 // Keystore interface implementation
 
 func (ks *Keystore) AddWallet(new_wallet *universe.Wallet) error {
-	// require object and id
+	// require wallet not null
 	if new_wallet == nil {
 		return universe.ErrWalletRequired
 	}

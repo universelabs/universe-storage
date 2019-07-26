@@ -1,12 +1,14 @@
 package stormdb_test
 
 import (
+	// stdlib
 	"io/ioutil"
 	"os"
-
+	// universe
 	"github.com/universelabs/universe-server/stormdb"
 )
 
+// test wrapper for stormdb.Client
 type Client struct {
 	*stormdb.Client
 }

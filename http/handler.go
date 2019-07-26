@@ -1,6 +1,9 @@
 package http
 
 import (
+	// stdlib
+	// "net/http"
+	// "log"
 	// universe
 	"github.com/universelabs/universe-server/universe"
 	// deps
@@ -32,8 +35,20 @@ func NewHandler(ks universe.Keystore) *Handler {
 	// instantiate and route handlers
 	h.KeystoreHandler = NewKeystoreHandler(ks)
 	// don't hardcode the version!
-	h.Route("/" /*+ versionString*/, func(r chi.Router) {
+	h.Route("/v" /*+ versionString*/, func(r chi.Router) {
 		r.Mount("/api/keystore", h.KeystoreHandler)
 	})
+
+	// 	// print all routes
+	// walkFunc := func(method, route string, handler http.Handler, 
+	// 	middlewares ...func(http.Handler) http.Handler) error {
+	// 		log.Printf("[Handler] %s -> %s\n", route, method)
+	// 		return nil
+	// }
+	// if err := chi.Walk(h.Mux, walkFunc); err != nil {
+	// 	log.Panicf("[Handler] Logging error: %s\n", err.Error()) // panic if there's an error
+	// }
+
+
 	return h
 }

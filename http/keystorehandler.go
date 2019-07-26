@@ -26,15 +26,15 @@ type KeystoreHandler struct {
 
 // NewKeystoreHandler returns a new instance of KeystoreHandler
 func NewKeystoreHandler(ks universe.Keystore) *KeystoreHandler {
-	h := &KeystoreHandler{
+	ksh := &KeystoreHandler{
 		Mux: chi.NewRouter(),
 		Keystore: ks, // FIX 
 		Logger: log.New(os.Stderr, "[Keystore] ", log.LstdFlags),
 	}
-	h.Mux.Post("/addwallet", h.AddWallet)
-	h.Mux.Get("/wallet/{walletID}", h.GetWallet)
-	h.Mux.Get("/platform/{platformID}", h.GetPlatform)
-	h.Mux.Get("/", h.GetAll)
+	ksh.Mux.Post("/addwallet", ksh.AddWallet)
+	ksh.Mux.Get("/wallet/{walletID}", ksh.GetWallet)
+	ksh.Mux.Get("/platform/{platformID}", ksh.GetPlatform)
+	ksh.Mux.Get("/", ksh.GetAll)
 
 	// print all routes
 	walkFunc := func(method, route string, handler http.Handler, 
@@ -42,11 +42,11 @@ func NewKeystoreHandler(ks universe.Keystore) *KeystoreHandler {
 			log.Printf("[KeystoreHandler] %s -> %s\n", route, method)
 			return nil
 	}
-	if err := chi.Walk(h.Mux, walkFunc); err != nil {
+	if err := chi.Walk(ksh.Mux, walkFunc); err != nil {
 		log.Panicf("[KeystoreHandler] Logging error: %s\n", err.Error()) // panic if there's an error
 	}
 
-	return h
+	return ksh
 }
 
 // Adds a wallet to the keystore from the HTTP request and returns a confirmation
@@ -57,15 +57,15 @@ func (ksh *KeystoreHandler) AddWallet(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&wallet)
 	if err != nil {
 		log.Println(err)
-	} else {
-		log.Printf("added wallet: %v", wallet)
-	}
+	} 
+
 	// add to db
 	err = ksh.Keystore.AddWallet(&wallet)
 	// return err if failed, else confirmation
 	if err != nil {
 		render.JSON(w, r, err)
 	} else {
+		log.Printf("AddWallet: %v", wallet)
 		render.JSON(w, r, wallet)
 	}
 }
@@ -78,11 +78,12 @@ func (ksh *KeystoreHandler) GetWallet(w http.ResponseWriter, r *http.Request) {
 		render.JSON(w, r, urlerr)
 		return
 	}
-	ret, err := ksh.Keystore.GetWallet(walletID)
+	wallet, err := ksh.Keystore.GetWallet(walletID)
 	if err != nil {
 		render.JSON(w, r, err)
 	} else {
-		render.JSON(w, r, ret)
+		log.Printf("GetWallet: %v", wallet)
+		render.JSON(w, r, wallet)
 	}
 }
 
