@@ -80,9 +80,10 @@ func (ksh *KeystoreHandler) GetWallet(w http.ResponseWriter, r *http.Request) {
 	}
 	wallet, err := ksh.Keystore.GetWallet(walletID)
 	if err != nil {
+		log.Printf("GetWallet: Error %v", err)
 		render.JSON(w, r, err)
 	} else {
-		log.Printf("GetWallet: %v", wallet)
+		log.Printf("GetWallet: returned %v", wallet)
 		render.JSON(w, r, wallet)
 	}
 }

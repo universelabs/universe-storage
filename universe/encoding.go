@@ -4,6 +4,7 @@ import (
 	// stdlib
 	"encoding/json"
 	"strconv"
+	"fmt"
 )
 
 func (w *Wallet) MarshalJSON() ([]byte, error) {
