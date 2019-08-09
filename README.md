@@ -1,23 +1,108 @@
-# go-backend
+<div align="center">
+  <h3>Universe Storage</h3>
+  <p>
+    Universe key storage and vault.
+    <br/>
+    <a href="https://universe.engineering">
+      <strong>universe.engineering</strong>
+    </a>
+  </p>
+  <p>
+    <a href="https://github.com/universelabs/universe-storage/issues/new?template=feature_request.md" alt="Request feature">
+      Request feature
+    </a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://github.com/universelabs/" alt="Explore Universe Labs GitHub">
+      Explore
+    </a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://github.com/universelabs/universe-storage/issues/new?template=bug_report.md" alt="Report a Bug">
+      Report bug
+    </a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://join.slack.com/t/universelabs/shared_invite/enQtNDQ0MjY3NDI5MTkwLTIzMWQ4M2U3MGQ3ZDY5MzM5MGQ5ZDM1MDZjNTgwNGI5NDdiNDY4ZDQyNWI2NjEzZmU3NzVmOTYwYzEzYzc1ZDE">
+      Slack
+    </a>
+    <br/>
+    <br/>
+    <a href="https://twitter.com/intent/follow?screen_name=universelabs">
+      <img src="https://img.shields.io/twitter/url/https/twitter.com/universelabs.svg?style=social&label=Follow%20%40universelabs&logo=twitter" alt="follow on Twitter" />
+    </a>
+    &nbsp;&middot;&nbsp;
+    <a href="/stargazers">
+      <img src="https://img.shields.io/github/stars/universelabs/universe-storage.svg?style=social&label=Star&maxAge=2592000" alt="Star Repo" />
+    </a>
+  </p>
+</div>
 
-Universe back end in Go.  All documentation here is first-draft and planning oriented.  It will likely change.  
+<br/>
 
-# First step: API server
-Http server that works quite like the one that Dan Trevino built in Express-- in fact hopefully exactly, with the exception of user auth, for now.  
+## Table of contents
 
-# Second Step:  Generate mock keypars
-(question: Should we be doing this on the front end, anyway-- feeding them to the back end?).  Need to look into libraries for generating Blockstack, Bitcoin, and Ethereum addresses (on either the front or the back in fact-- main thing is that we want 
+- [Status](#status)
+- [Contributing](#contributing)
+- [Roadmap](#roadmap)
+- [Community](#community)
+- [Maintainers](#maintainers)
+- [License](#license)
 
-# Third Step: Serve the front end from the back end
 
-When the user runs this, it shouldn't be just a plain REST API, that wouldn't give them too much to chew on at all.  Instead, we should embed the front end into go-backend so that when this binary is run, the user can go to a certain port and have the front end served to them.  Default should be localhost (mac, windows) and there should be a flag to serve at 0.0.0.0 (Raspberry pi).  
+## Status
+
+[![Slack](https://img.shields.io/badge/Community-Join_the_Slack!-purple.svg?colorA=212121&colorB=3f46ad)](https://join.slack.com/t/universelabs/shared_invite/enQtNDQ0MjY3NDI5MTkwLTIzMWQ4M2U3MGQ3ZDY5MzM5MGQ5ZDM1MDZjNTgwNGI5NDdiNDY4ZDQyNWI2NjEzZmU3NzVmOTYwYzEzYzc1ZDE)
+[![Universe Core Version](https://img.shields.io/badge/Version-v0.0.1.alpha-red.svg?colorA=212121&colorB=FF0000)]()
 
 
-## Fourth Step: Persistence
-* Go Embedded DB
-  * Boltdb
-  * bbolt
-  * storm
-  * badgerdb
-  
-Rationale: This way, it runs anywhere and creates a new database at first launch, while using a fixed location so that subsequent launches pick up anything persisted before.
+## Contributing
+
+Please read through our [contributing guidelines](https://github.com/universelabs/universe/blob/master/CONTRIBUTING.md). Included are directions for opening issues, coding standards, and notes on development.
+
+Moreover, if your pull request contains JavaScript patches or features, you
+must include relevant unit tests. All code should conform to the [Code Guidelines](https://github.com/universelabs/universe/blob/master/CONTRIBUTING.md#code-guidelines).
+
+
+## Roadmap
+
+Universe Labs' mission is to become the largest open source node and key management network.
+
+[› Universe Roadmap](https://github.com/universelabs/universe/blob/master/ROADMAP.md)
+
+View the Universe Roadmap to learn more about project overview, goals, execution to date, milestones, current tech stack, and more...
+
+
+## Community
+
+Get updates on Universe's development and chat with the project maintainers and community members.
+
+- Subscribe to the [Universe Newsletter](http://universe.engineering/subscribe)
+- [Star this repo](https://github.com/universelabs/universe/stargazers)
+- Follow [@universelabs](https://twitter.com/universelabs) on Twitter.
+- Join the official Universe [Slack](https://join.slack.com/t/universelabs/shared_invite/enQtNDQ0MjY3NDI5MTkwLTIzMWQ4M2U3MGQ3ZDY5MzM5MGQ5ZDM1MDZjNTgwNGI5NDdiNDY4ZDQyNWI2NjEzZmU3NzVmOTYwYzEzYzc1ZDE).
+
+
+## Maintainers
+
+**Itamar Reif**
+- <https://twitter.com/itamarreif>
+- <https://github.com/itamarreif>
+
+**Jacob Gadakian**
+- <https://twitter.com/gadikian>
+- <https://github.com/faddat>
+
+**Guy Lepage**
+
+- <https://twitter.com/guylepage3>
+- <https://github.com/guylepage3>
+
+
+## License
+
+By contributing your code, you agree to license your contribution under the [
+MIT License](LICENSE).
+
+<div align="right">
+  <a href="https://opensource.guide/how-to-contribute/#why-contribute-to-open-source">
+    <img src="https://badges.frapsoft.com/os/v3/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/" alt="Open Source">
+  </a>
+</div>
