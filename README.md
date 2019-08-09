@@ -50,7 +50,7 @@
 ## Status
 
 [![Slack](https://img.shields.io/badge/Community-Join_the_Slack!-purple.svg?colorA=212121&colorB=3f46ad)](https://join.slack.com/t/universelabs/shared_invite/enQtNDQ0MjY3NDI5MTkwLTIzMWQ4M2U3MGQ3ZDY5MzM5MGQ5ZDM1MDZjNTgwNGI5NDdiNDY4ZDQyNWI2NjEzZmU3NzVmOTYwYzEzYzc1ZDE)
-[![Universe Core Version](https://img.shields.io/badge/Version-v0.0.1.alpha-red.svg?colorA=212121&colorB=FF0000)]()
+[![Universe Storage Version](https://img.shields.io/badge/Version-v0.2.1.alpha-red.svg?colorA=212121&colorB=FF0000)]()
 
 
 ## Contributing
@@ -89,11 +89,6 @@ Get updates on Universe's development and chat with the project maintainers and 
 **Jacob Gadakian**
 - <https://twitter.com/gadikian>
 - <https://github.com/faddat>
-
-**Guy Lepage**
-
-- <https://twitter.com/guylepage3>
-- <https://github.com/guylepage3>
 
 
 ## License
