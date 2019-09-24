@@ -46,12 +46,10 @@
 - [Maintainers](#maintainers)
 - [License](#license)
 
-
 ## Status
 
 [![Slack](https://img.shields.io/badge/Community-Join_the_Slack!-purple.svg?colorA=212121&colorB=3f46ad)](https://join.slack.com/t/universelabs/shared_invite/enQtNjA2MjM1NjAyNzI0LTUyYWZjM2I5M2VhMTU3YTY3ZGI0YTAwNDQwN2I1Mzc4Yjk3YTg2Y2IxOGMyMDljOTdkM2Y4NTM3ZTAwYzc3NTg)
 [![Universe Storage Version](https://img.shields.io/badge/Version-v0.2.1.alpha-red.svg?colorA=212121&colorB=FF0000)]()
-
 
 ## Contributing
 
@@ -60,7 +58,6 @@ Please read through our [contributing guidelines](https://github.com/universelab
 Moreover, if your pull request contains JavaScript patches or features, you
 must include relevant unit tests. All code should conform to the [Code Guidelines](https://github.com/universelabs/universe/blob/master/CONTRIBUTING.md#code-guidelines).
 
-
 ## Roadmap
 
 Universe Labs' mission is to become the largest decentralized login and decentralized private key recovery protocol.
@@ -68,7 +65,6 @@ Universe Labs' mission is to become the largest decentralized login and decentra
 [› Universe Roadmap](https://github.com/universelabs/universe/blob/master/ROADMAP.md)
 
 View the Universe Roadmap to learn more about project overview, goals, execution to date, milestones, current tech stack, and more...
-
 
 ## Community
 
@@ -79,7 +75,6 @@ Get updates on Universe's development and chat with the project maintainers and 
 - Follow [@universelabs](https://twitter.com/universelabs) on Twitter.
 - Join the official Universe [Slack](https://join.slack.com/t/universelabs/shared_invite/enQtNjA2MjM1NjAyNzI0LTUyYWZjM2I5M2VhMTU3YTY3ZGI0YTAwNDQwN2I1Mzc4Yjk3YTg2Y2IxOGMyMDljOTdkM2Y4NTM3ZTAwYzc3NTg).
 
-
 ## Maintainers
 
 **Itamar Reif**
@@ -89,7 +84,6 @@ Get updates on Universe's development and chat with the project maintainers and 
 **Jacob Gadakian**
 - <https://twitter.com/gadikian>
 - <https://github.com/faddat>
-
 
 ## License
 
